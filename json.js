@@ -7,10 +7,10 @@ const fs = require('fs'),
 function printUsage() {
     console.log(
 `usage: ${process.argv[1]} [.json.js file]
-    
-Reads a Javascript object from the optionally specified file or from standard
-input if no file is specified, and prints the resulting JSON to standard
-output.`);
+
+Reads a Javascript function from the optionally specified
+file or from standard input if no file is specified, and
+prints the returned object as JSON to standard output.`);
 }
 
 if (['--help', '-h'].indexOf(inputPath) !== -1) {
@@ -29,9 +29,10 @@ fs.readFile(inputPath, 'utf8', (error, code) => {
         return;
     }
 
-    // In order for an object literal to be parsed as an object and not as a
-    // code block, it has to be enclosed in parentheses.
-    code = `(${code})`;
+    // Wrap the provided function in parentheses and execute it.
+    // The extra newline ("\n") and block comment ("/**/") are to prevent
+    // issues with trailing comments in the input.
+    code = `(${code}\n/**/)()`;
 
     // Create an execution context with no global variables, and execute the
     // code in that context. Then JSONify the result and print it to standard
