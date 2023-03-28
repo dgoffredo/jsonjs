@@ -34,9 +34,9 @@ fs.readFile(inputPath, 'utf8', (error, code) => {
     // issues with trailing comments in the input.
     code = `(${code}\n/**/)()`;
 
-    // Create an execution context with no global variables, and execute the
-    // code in that context. Then JSONify the result and print it to standard
-    // output.
+    // Create an execution context with no global variables (except those
+    // provided by the language), and execute the code in that context. Then
+    // JSONify the result and print it to standard output.
     const value = vm.runInNewContext(code);
     const stringified = JSON.stringify(value);
     if (typeof stringified !== 'string') {
