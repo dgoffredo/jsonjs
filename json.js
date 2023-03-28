@@ -37,5 +37,9 @@ fs.readFile(inputPath, 'utf8', (error, code) => {
     // Create an execution context with no global variables, and execute the
     // code in that context. Then JSONify the result and print it to standard
     // output.
-    console.log(JSON.stringify(vm.runInNewContext(code)));
+    const value = vm.runInNewContext(code);
+    const stringified = JSON.stringify(value);
+    if (typeof stringified !== 'string') {
+        throw Error(`JSON.stringify of the returned value has type ${typeof stringified} while a string was expected. The value is probably not JSON-compatible. value: ${value}`);
+    }
 });
