@@ -42,4 +42,5 @@ fs.readFile(inputPath, 'utf8', (error, code) => {
     if (typeof stringified !== 'string') {
         throw Error(`JSON.stringify of the returned value has type ${typeof stringified} while a string was expected. The value is probably not JSON-compatible. value: ${value}`);
     }
+    console.log(stringified);
 });
