@@ -29,10 +29,10 @@ fs.readFile(inputPath, 'utf8', (error, code) => {
         return;
     }
 
-    // Wrap the provided function in parentheses and execute it.
-    // The extra newline ("\n") and block comment ("/**/") are to prevent
-    // issues with trailing comments in the input.
-    code = `(${code}\n/**/)()`;
+    // Wrap the provided function in parentheses and invoke it as a function.
+    // The extra newline ("\n") is to prevent issues with a trailing line
+    // comment in the input.
+    code = `(${code}\n)()`;
 
     // Create an execution context with no global variables (except those
     // provided by the language), and execute the code in that context. Then
