@@ -32,12 +32,15 @@ fs.readFile(inputPath, 'utf8', (error, code) => {
     // Wrap the provided function in parentheses and invoke it as a function.
     // The extra newline ("\n") is to prevent issues with a trailing line
     // comment in the input.
-    code = `(${code}\n)()`;
+    code = `(\n${code}\n)()`;
 
     // Create an execution context with no global variables (except those
     // provided by the language), and execute the code in that context. Then
     // JSONify the result and print it to standard output.
-    const value = vm.runInNewContext(code);
+    const value = vm.runInNewContext(code, undefined, {
+        lineOffset: -1,
+        filename: inputPath
+    });
     const stringified = JSON.stringify(value);
     if (typeof stringified !== 'string') {
         throw Error(`JSON.stringify of the returned value has type ${typeof stringified} while a string was expected. The value is probably not JSON-compatible. value: ${value}`);
